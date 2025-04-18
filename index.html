@@ -47,8 +47,11 @@
     tr:last-child td {
       border-bottom: none;
     }
+    .divider {
+      margin: 50px 0 30px;
+      border-top: 1px solid #ccc;
+    }
     .totali {
-      margin-top: 30px;
       text-align: right;
     }
     .totali p {
@@ -73,8 +76,8 @@
   <div class="header">
     <div>
       <h3>Fornitore</h3>
-      <p><strong id="nome"></strong></p>
-      <p id="indirizzo"></p>
+      <p>Nome: <span id="nomeutente"></span></p>
+      <p>Indirizzo: <span id="indirizzo"></span></p>
       <p>P.IVA: <span id="piva"></span></p>
       <p>Tel: <span id="telefono"></span></p>
       <p>Email: <span id="email"></span></p>
@@ -88,6 +91,7 @@
   <table id="tabella-servizi">
     <thead>
       <tr>
+        <th>Codice</th>
         <th>Descrizione</th>
         <th>Quantità</th>
         <th>Prezzo</th>
@@ -96,6 +100,8 @@
     </thead>
     <tbody></tbody>
   </table>
+
+  <div class="divider"></div>
 
   <div class="totali">
     <p class="totale-netto"><strong>Totale netto:</strong> <span id="netto"></span> €</p>
@@ -106,7 +112,10 @@
   <script>
     const p = new URLSearchParams(window.location.search);
     const campi = ["nome","indirizzo","piva","telefono","email","cliente","netto","iva","lordo"];
-    campi.forEach(id => document.getElementById(id).textContent = p.get(id) || '');
+    campi.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = p.get(id) || '';
+    });
 
     const serviziRaw = p.get("servizi");
     if (serviziRaw) {
@@ -116,6 +125,7 @@
         servizi.forEach(s => {
           const r = document.createElement("tr");
           r.innerHTML = `
+            <td>${s.codice || ''}</td>
             <td>${s.descrizione}</td>
             <td>${s.quantita}</td>
             <td>${s.prezzo} €</td>
