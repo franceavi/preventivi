@@ -1,58 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
   <meta charset="UTF-8">
+  <title>Preventivo</title>
   <style>
-    body { font-family: Arial; padding: 30px; }
+    body { font-family: Arial, sans-serif; padding: 30px; }
+    h2 { margin-bottom: 10px; }
+    p { margin: 5px 0; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #000; padding: 6px; }
+    th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; }
   </style>
 </head>
 <body>
 
   <h2>Preventivo per <span id="cliente"></span></h2>
 
-  <p><strong>Generato da:</strong><br>
-    <span id="nome"></span><br>
-    <span id="indirizzo"></span><br>
-    P.IVA: <span id="piva"></span><br>
-    Tel: <span id="telefono"></span><br>
-    Email: <span id="email"></span><br>
-    IBAN: <span id="iban"></span><br>
-    Banca: <span id="banca"></span>
-  </p>
+  <p><strong>Generato da:</strong></p>
+  <p id="nome"></p>
+  <p id="indirizzo"></p>
+  <p>P.IVA: <span id="piva"></span></p>
+  <p>Tel: <span id="telefono"></span></p>
+  <p>Email: <span id="email"></span></p>
+  <p>IBAN: <span id="iban"></span></p>
+  <p>Banca: <span id="banca"></span></p>
 
-  <table>
-    <tr>
-      <th>Descrizione</th>
-      <th>Quantità</th>
-      <th>Prezzo</th>
-      <th>Totale</th>
-    </tr>
-    <tr>
-      <td>Maglia</td>
-      <td>10</td>
-      <td>12,00€</td>
-      <td>120,00€</td>
-    </tr>
-    <tr>
-      <td>Palloni</td>
-      <td>5</td>
-      <td>5,00€</td>
-      <td>25,00€</td>
-    </tr>
+  <table id="tabella-servizi">
+    <thead>
+      <tr>
+        <th>Descrizione</th>
+        <th>Quantità</th>
+        <th>Prezzo Unitario</th>
+        <th>Totale</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
   </table>
 
-  <p style="margin-top: 20px;">
-    <strong>Totale netto:</strong> <span id="netto"></span> €<br>
-    <strong>IVA:</strong> <span id="iva"></span> €<br>
-    <strong>Totale lordo:</strong> <span id="lordo"></span> €
-  </p>
+  <p><strong>Totale netto:</strong> <span id="netto"></span> €</p>
+  <p><strong>IVA:</strong> <span id="iva"></span> €</p>
+  <p><strong>Totale lordo:</strong> <span id="lordo"></span> €</p>
 
   <script>
     const p = new URLSearchParams(window.location.search);
     const campi = ["cliente","nome","indirizzo","piva","telefono","email","iban","banca","netto","iva","lordo"];
     campi.forEach(id => document.getElementById(id).textContent = p.get(id) || '');
+
+    // Parse servizi dinamici (JSON)
+    const serviziRaw = p.get("servizi");
+    if (serviziRaw) {
+      try {
+        const servizi = JSON.parse(decodeURIComponent(serviziRaw));
+        const tbody = document.querySelector("#tabella-servizi tbody");
+        servizi.forEach(servizio => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${servizio.descrizione}</td>
+            <td>${servizio.quantita}</td>
+            <td>${servizio.prezzo}€</td>
+            <td>${servizio.costo}€</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (e) {
+        document.querySelector("#tabella-servizi").outerHTML = "<p>Errore nel caricamento della tabella.</p>";
+      }
+    }
   </script>
 
 </body>
