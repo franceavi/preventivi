@@ -19,9 +19,15 @@
     }
     .titolo-secondario {
       text-align: left;
-      margin-bottom: 40px;
+      margin-bottom: 0;
       font-size: 1.3em;
       color: #444;
+    }
+    .data-preventivo {
+      text-align: left;
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 40px;
     }
     .header {
       display: flex;
@@ -97,12 +103,13 @@
 
   <div class="titolo-generale">Preventivo</div>
   <div class="titolo-secondario" id="titolo"></div>
+  <div class="data-preventivo">Data: <span id="data"></span></div>
 
   <div class="header">
     <div>
       <h3>Fornitore</h3>
       <p class="fornitore-nome" id="nomeutente"></p>
-      <p id="indirizzo"></p>
+      <p>Indirizzo: <span id="indirizzo"></span></p>
       <p>Email: <span id="email"></span></p>
       <p>P.IVA: <span id="piva"></span></p>
       <p>Tel: <span id="telefono"></span></p>
@@ -142,7 +149,7 @@
 
   <script>
     const p = new URLSearchParams(window.location.search);
-    const campi = ["titolo", "nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "netto", "iva", "lordo", "banca", "iban"];
+    const campi = ["titolo", "data", "nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "netto", "iva", "lordo", "banca", "iban"];
     campi.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = p.get(id) || '';
