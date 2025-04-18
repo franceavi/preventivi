@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #000; padding: 6px; }
+  </style>
+</head>
+<body>
+
+  <h2>Preventivo per <span id="cliente"></span></h2>
+
+  <p><strong>Generato da:</strong><br>
+    <span id="nome"></span><br>
+    <span id="indirizzo"></span><br>
+    P.IVA: <span id="piva"></span><br>
+    Tel: <span id="telefono"></span><br>
+    Email: <span id="email"></span><br>
+    IBAN: <span id="iban"></span><br>
+    Banca: <span id="banca"></span>
+  </p>
+
+  <table>
+    <tr>
+      <th>Descrizione</th>
+      <th>Quantità</th>
+      <th>Prezzo</th>
+      <th>Totale</th>
+    </tr>
+    <tr>
+      <td>Maglia</td>
+      <td>10</td>
+      <td>12,00€</td>
+      <td>120,00€</td>
+    </tr>
+    <tr>
+      <td>Palloni</td>
+      <td>5</td>
+      <td>5,00€</td>
+      <td>25,00€</td>
+    </tr>
+  </table>
+
+  <p style="margin-top: 20px;">
+    <strong>Totale netto:</strong> <span id="netto"></span> €<br>
+    <strong>IVA:</strong> <span id="iva"></span> €<br>
+    <strong>Totale lordo:</strong> <span id="lordo"></span> €
+  </p>
+
+  <script>
+    const p = new URLSearchParams(window.location.search);
+    const campi = ["cliente","nome","indirizzo","piva","telefono","email","iban","banca","netto","iva","lordo"];
+    campi.forEach(id => document.getElementById(id).textContent = p.get(id) || '');
+  </script>
+
+</body>
+</html>
