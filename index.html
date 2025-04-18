@@ -111,7 +111,7 @@
 
   <script>
     const p = new URLSearchParams(window.location.search);
-    const campi = ["nome","indirizzo","piva","telefono","email","cliente","netto","iva","lordo"];
+    const campi = ["nomeutente","indirizzo","piva","telefono","email","cliente","netto","iva","lordo"];
     campi.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = p.get(id) || '';
