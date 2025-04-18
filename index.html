@@ -11,9 +11,17 @@
       padding: 20px;
       color: #222;
     }
-    h1 {
-      text-align: center;
+    .titolo-generale {
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+    .titolo-secondario {
+      text-align: left;
       margin-bottom: 40px;
+      font-size: 1.3em;
+      color: #444;
     }
     .header {
       display: flex;
@@ -87,7 +95,8 @@
 </head>
 <body>
 
-  <h1>Preventivo</h1>
+  <div class="titolo-generale">Preventivo</div>
+  <div class="titolo-secondario" id="titolo"></div>
 
   <div class="header">
     <div>
@@ -133,7 +142,7 @@
 
   <script>
     const p = new URLSearchParams(window.location.search);
-    const campi = ["nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "netto", "iva", "lordo", "banca", "iban"];
+    const campi = ["titolo", "nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "netto", "iva", "lordo", "banca", "iban"];
     campi.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = p.get(id) || '';
