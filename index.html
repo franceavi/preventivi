@@ -67,6 +67,11 @@
     tr:last-child td {
       border-bottom: none;
     }
+    th:nth-child(1), td:nth-child(1) { width: 15%; }
+    th:nth-child(2), td:nth-child(2) { width: 35%; }
+    th:nth-child(3), td:nth-child(3) { width: 15%; }
+    th:nth-child(4), td:nth-child(4) { width: 15%; }
+    th:nth-child(5), td:nth-child(5) { width: 20%; }
     .divider {
       margin: 50px 0 30px;
       border-top: 1px solid #ccc;
@@ -148,11 +153,23 @@
   </div>
 
   <script>
+    function formatEuro(val) {
+      const num = parseFloat(val.toString().replace(',', '.'));
+      if (isNaN(num)) return val;
+      return num.toFixed(2).replace('.', ',');
+    }
+
     const p = new URLSearchParams(window.location.search);
-    const campi = ["titolo", "data", "nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "netto", "iva", "lordo", "banca", "iban"];
+    const campi = ["titolo", "data", "nomeutente", "indirizzo", "piva", "telefono", "email", "cliente", "banca", "iban"];
+    const importi = ["netto", "iva", "lordo"];
+
     campi.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = p.get(id) || '';
+    });
+    importi.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = formatEuro(p.get(id));
     });
 
     const serviziRaw = p.get("servizi");
@@ -166,8 +183,8 @@
             <td>${s.codice || ''}</td>
             <td>${s.descrizione}</td>
             <td>${s.quantita}</td>
-            <td>${s.prezzo} €</td>
-            <td>${s.costo} €</td>
+            <td>${formatEuro(s.prezzo)} €</td>
+            <td>${formatEuro(s.costo)} €</td>
           `;
           tbody.appendChild(r);
         });
