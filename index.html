@@ -156,6 +156,12 @@
     <p><strong>Totale lordo:</strong> <span id="lordo"></span> €</p>
   </div>
 
+  <!-- BLOCCO NOTE -->
+  <div id="note-blocco" style="margin-top: 40px; display: none; border-top: 1px solid #ccc; padding-top: 20px;">
+    <h3 style="margin-bottom: 10px;">Note</h3>
+    <p id="note" style="white-space: pre-wrap; font-size: 1em; color: #333;"></p>
+  </div>
+
   <div class="footer">
     <p><strong>Modalità di pagamento:</strong> 30% all'ordine, 70% al completamento</p>
     <p><strong>Nome Banca:</strong> <span id="banca"></span></p>
@@ -205,6 +211,14 @@
       } catch (e) {
         document.querySelector("#tabella-servizi").outerHTML = "<p>Errore nella tabella dei servizi.</p>";
       }
+    }
+
+    // GESTIONE NOTE
+    const note = p.get("note");
+    if (note) {
+      const decodedNote = decodeURIComponent(note.replace(/\+/g, ' '));
+      document.getElementById("note").textContent = decodedNote;
+      document.getElementById("note-blocco").style.display = "block";
     }
   </script>
 
